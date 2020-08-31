@@ -1,3 +1,7 @@
 /.vs
 /Training.sln
 /Training/bin
+/Training/obj/Training.csproj.nuget.dgspec.json
+/Training/obj/project.nuget.cache
+/Training/obj/project.assets.json
+/Training/obj/Debug/netcoreapp3.1/Training.assets.cache

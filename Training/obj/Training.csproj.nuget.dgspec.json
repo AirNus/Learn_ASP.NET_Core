@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ainur\\source\\repos\\Training\\Training\\Training.csproj": {}
+    "C:\\Users\\Ainur\\source\\repos\\Training\\Learn_ASP.NET_Core\\Training\\Training.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ainur\\source\\repos\\Training\\Training\\Training.csproj": {
+    "C:\\Users\\Ainur\\source\\repos\\Training\\Learn_ASP.NET_Core\\Training\\Training.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ainur\\source\\repos\\Training\\Training\\Training.csproj",
+        "projectUniqueName": "C:\\Users\\Ainur\\source\\repos\\Training\\Learn_ASP.NET_Core\\Training\\Training.csproj",
         "projectName": "Training",
-        "projectPath": "C:\\Users\\Ainur\\source\\repos\\Training\\Training\\Training.csproj",
+        "projectPath": "C:\\Users\\Ainur\\source\\repos\\Training\\Learn_ASP.NET_Core\\Training\\Training.csproj",
         "packagesPath": "C:\\Users\\Ainur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ainur\\source\\repos\\Training\\Training\\obj\\",
+        "outputPath": "C:\\Users\\Ainur\\source\\repos\\Training\\Learn_ASP.NET_Core\\Training\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ainur\\AppData\\Roaming\\NuGet\\NuGet.Config",
