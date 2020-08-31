@@ -23,6 +23,10 @@ namespace Training
             {
                 await context.Response.WriteAsync("Abbooouuuuttttt");
             }
+            else if (path == "/error")
+            {
+                await context.Response.WriteAsync("DivideByZeroException occured!");
+            }
             else
             {
                 context.Response.StatusCode = 404;
