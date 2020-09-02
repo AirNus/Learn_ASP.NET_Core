@@ -23,7 +23,7 @@ namespace DependencyInjection
         public void ConfigureServices(IServiceCollection services)
         {
             //this._services = services;
-            //services.AddTransient<IMessageSender, SmsMessageSender>();
+            services.AddTransient<IMessageSender, SmsMessageSender>();            
             services.AddTimeService();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,10 +34,16 @@ namespace DependencyInjection
                 app.UseDeveloperExceptionPage();
             }
 
+            // Получаем зависимость через метод ApplicationServices из IApplicationBuilder
+            IMessageSender messageSender = app.ApplicationServices.GetService<IMessageSender>();
+
+            // Внедрили зависимость через конвеер middleware
+            //app.UseMiddleware<MessageMiddleware>();
+
             app.Run(async (context) =>
             {
-                context.Response.ContentType = "text/html;charset=utf-8"; 
-                await context.Response.WriteAsync($"Текущая дата и время: {timeService?.GetTime()}");
+                context.Response.ContentType = "text/html;charset=utf-8";
+                await context.Response.WriteAsync($"Текущая дата и время: {timeService?.GetTime()} <p>Message: {messageSender.Send()}</p>");
             });
 
             //app.Run(async (context) =>
@@ -58,7 +64,7 @@ namespace DependencyInjection
             //    context.Response.ContentType = "text/html;charset=utf-8";
             //    await context.Response.WriteAsync(fillingPage.ToString());
             //});
-            
+
 
         }
     }
