@@ -19,12 +19,16 @@ namespace DependencyInjection
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
         //private IServiceCollection _services;
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             //this._services = services;
-            services.AddTransient<IMessageSender, SmsMessageSender>();            
+            services.AddTransient<IMessageSender, SmsMessageSender>();
             services.AddTimeService();
+
+
+            services.AddTransient<ICounter, RandomCounter>();
+            services.AddSingleton<CounterService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TimeService timeService)
@@ -40,11 +44,12 @@ namespace DependencyInjection
             // Внедрили зависимость через конвеер middleware
             //app.UseMiddleware<MessageMiddleware>();
 
-            app.Run(async (context) =>
-            {
-                context.Response.ContentType = "text/html;charset=utf-8";
-                await context.Response.WriteAsync($"Текущая дата и время: {timeService?.GetTime()} <p>Message: {messageSender.Send()}</p>");
-            });
+            app.UseMiddleware<CounterMiddleware>();
+            //app.Run(async (context) =>
+            //{
+            //    context.Response.ContentType = "text/html;charset=utf-8";
+            //    await context.Response.WriteAsync($"Текущая дата и время: {timeService?.GetTime()} <p>Message: {messageSender.Send()}</p>");
+            //});
 
             //app.Run(async (context) =>
             //{
