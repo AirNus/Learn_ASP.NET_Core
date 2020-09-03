@@ -23,7 +23,19 @@ namespace DependencyInjection
         public void ConfigureServices(IServiceCollection services)
         {
             //this._services = services;
-            services.AddTransient<IMessageSender, SmsMessageSender>();
+
+            /// Используем перегрузку метода для использования фабрики сервисов. 
+            /// Фабрика позволяет применять более сложную логику по созданию сервиса
+            services.AddTransient<IMessageSender>(provider => 
+            {
+                if (DateTime.Now.Hour >= 12)
+                    return new EmailMessageSender();
+                else
+                    return new SmsMessageSender();
+            });
+
+            
+
             services.AddTimeService();
 
 
@@ -31,7 +43,7 @@ namespace DependencyInjection
             services.AddSingleton<CounterService>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TimeService timeService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -44,11 +56,18 @@ namespace DependencyInjection
             // Внедрили зависимость через конвеер middleware
             //app.UseMiddleware<MessageMiddleware>();
 
-            app.UseMiddleware<CounterMiddleware>();
+            // Вызываем Counter через Middleware
+            //app.UseMiddleware<CounterMiddleware>();
+
+            app.UseMiddleware<TimerMiddleware>();
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Hello! my little friend");
+            });
             //app.Run(async (context) =>
             //{
             //    context.Response.ContentType = "text/html;charset=utf-8";
-            //    await context.Response.WriteAsync($"Текущая дата и время: {timeService?.GetTime()} <p>Message: {messageSender.Send()}</p>");
+            //    await context.Response.WriteAsync($"текущая дата и время: {timeService?.GetTime()} <p>message: {messageSender.Send()}</p>");
             //});
 
             //app.Run(async (context) =>

@@ -7,6 +7,13 @@ namespace DependencyInjection
 {
     public class TimeService
     {
-        public string GetTime() => System.DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+        public TimeService()
+        {
+            Time = System.DateTime.Now.ToString("hh:mm:ss");
+        }
+
+        public string Time { get; }
     }
+
+    
 }
