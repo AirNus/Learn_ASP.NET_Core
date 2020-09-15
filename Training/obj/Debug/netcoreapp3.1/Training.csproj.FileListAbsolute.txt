@@ -38,3 +38,4 @@ C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\Training\obj\Debug\netco
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\Training\obj\Debug\netcoreapp3.1\Training.dll
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\Training\obj\Debug\netcoreapp3.1\Training.pdb
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\Training\obj\Debug\netcoreapp3.1\Training.genruntimeconfig.cache
+C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\Training\bin\Debug\netcoreapp3.1\TrainyConf.json

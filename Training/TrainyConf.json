@@ -1,0 +1,11 @@
+{
+  "color": {
+    "header": "blue",
+    "footer": "orange"
+  },
+  "text": {
+    "header": "Welcome, my friend!",
+    "footer": "I'm footer!"
+  }
+
+}
