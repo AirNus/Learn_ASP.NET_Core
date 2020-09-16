@@ -17,11 +17,20 @@ namespace Training
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940  
         public Startup(IConfiguration config)
         {
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("TrainyConf.json")
-                .AddConfiguration(config);
 
+            // Считываем конфигурацию из текстового файла при помощи собственных классов Lesson5
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(System.IO.Directory.GetCurrentDirectory() + "//Lesson5");
+
+            builder.AddTextFile("config.txt");
             AppConfiguration = builder.Build();
+            ///
+            //// Считываем стандартные конфигурации и конфигурации из JSON
+            //var builder = new ConfigurationBuilder()
+            //    .AddJsonFile("TrainyConf.json")
+            //    .AddConfiguration(config);
+
+            //AppConfiguration = builder.Build();
         }
         public IConfiguration AppConfiguration { get; set; }
 
@@ -82,14 +91,14 @@ namespace Training
             // app.UseMiddleware<RoutingMiddleware>();
 
             // Метод который ищет файлы с названием index\default  и выставляет их как корневые при запуске страницы. Можно поменять
-            app.UseFileServer();
+            //app.UseFileServer();
 
-            //app.Run(async (context) =>
-            //{
-            //    int y = 0;
-            //    int x = 8 / y;
-            //    await context.Response.WriteAsync($"Rezult: {x}");
-            //});
+            var color = AppConfiguration["color"];
+            var text = AppConfiguration["text"];
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync($"<h1 style='color:{color};'>{text}</h1>");
+            });
         }
     }
 }

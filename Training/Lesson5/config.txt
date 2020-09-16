@@ -1,0 +1,4 @@
+﻿color 
+blue
+text
+Lesson 5 is ready!
