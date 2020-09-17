@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Training.Lesson6;
+using Training.Lesson7;
 
 namespace Training
 {
@@ -19,9 +20,9 @@ namespace Training
         public Startup(IConfiguration config)
         {
             var builder = new ConfigurationBuilder()
-                .AddXmlFile("//Lesson6//person.xml");
+                //.AddXmlFile("//Lesson6//person.xml");
                 //Подключаем JSON
-                //.AddJsonFile("//Lesson6//person.json");
+                .AddJsonFile("//Lesson6//person.json");
             AppConfiguration = builder.Build();
 
             //// Считываем конфигурацию из текстового файла при помощи собственных классов Lesson5
@@ -42,6 +43,11 @@ namespace Training
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //Lesson7 Добавляем зависимость для класса Person
+            services.Configure<Person>(AppConfiguration);
+            // При помощи метода переопределяем одно из заданных в JSON файле параметре
+            services.Configure<Person>(option => option.Name = "Zimbambe");
+
             //// Добавляем конфигурацию в контейнер для DI Lesson5
             //services.AddTransient<IConfiguration>(provider => AppConfiguration);
         }
@@ -108,21 +114,24 @@ namespace Training
             //});
 
             // Lesson 6
-            var Ainur = new Person();
-            AppConfiguration.Bind(Ainur);
-            app.Run(async (context) =>
-            {
-                string name = $"<p>Name: {Ainur.Name}</p>";
-                string age = $"<p>Age: {Ainur.Age}</p>";
-                string languageList = "<p>Languages:</p><ul>";
-                foreach(var language in Ainur.Languages)
-                {
-                    languageList += $"<li><p>{language}</p></li>";
-                }
-                languageList += "</ul>";
-                string company = $"<p>Company: {AppConfiguration.GetSection("company").Get<Company>().Tittle}</p>";
-                await context.Response.WriteAsync($"{name}{age}{languageList}{company}");                    
-            });
+            //var Ainur = new Person();
+            //AppConfiguration.Bind(Ainur);
+            //app.Run(async (context) =>
+            //{
+            //    string name = $"<p>Name: {Ainur.Name}</p>";
+            //    string age = $"<p>Age: {Ainur.Age}</p>";
+            //    string languageList = "<p>Languages:</p><ul>";
+            //    foreach(var language in Ainur.Languages)
+            //    {
+            //        languageList += $"<li><p>{language}</p></li>";
+            //    }
+            //    languageList += "</ul>";
+            //    string company = $"<p>Company: {AppConfiguration.GetSection("company").Get<Company>().Tittle}</p>";
+            //    await context.Response.WriteAsync($"{name}{age}{languageList}{company}");                    
+            //});
+
+            // Lesson 7 
+            app.UseMiddleware<PersonMiddleware>();
         }
     }
 }
