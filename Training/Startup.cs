@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Training.Lesson6;
 
 namespace Training
 {
@@ -17,13 +18,18 @@ namespace Training
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940  
         public Startup(IConfiguration config)
         {
-
-            // Считываем конфигурацию из текстового файла при помощи собственных классов Lesson5
             var builder = new ConfigurationBuilder()
-                .SetBasePath(System.IO.Directory.GetCurrentDirectory() + "//Lesson5");
-
-            builder.AddTextFile("config.txt");
+                .AddXmlFile("//Lesson6//person.xml");
+                //Подключаем JSON
+                //.AddJsonFile("//Lesson6//person.json");
             AppConfiguration = builder.Build();
+
+            //// Считываем конфигурацию из текстового файла при помощи собственных классов Lesson5
+            //var builder = new ConfigurationBuilder()
+            //    .SetBasePath(System.IO.Directory.GetCurrentDirectory() + "//Lesson5");
+            //builder.AddTextFile("config.txt");
+            //AppConfiguration = builder.Build();
+
             ///
             //// Считываем стандартные конфигурации и конфигурации из JSON
             //var builder = new ConfigurationBuilder()
@@ -36,8 +42,8 @@ namespace Training
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Добавляем конфигурацию в контейнер для DI
-            services.AddTransient<IConfiguration>(provider => AppConfiguration);
+            //// Добавляем конфигурацию в контейнер для DI Lesson5
+            //services.AddTransient<IConfiguration>(provider => AppConfiguration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +89,7 @@ namespace Training
 
             // Обработка ошибок в HTTP
             app.UseStatusCodePages();
-            // Расширенная версия метода, в котором можно определить сообщения показываемое пользователю
+            // Расширенная версия метода, в кот9ором можно определить сообщения показываемое пользователю
             //app.UseStatusCodePages("text/plain","Error. Status code : {0}");
 
 
@@ -93,11 +99,29 @@ namespace Training
             // Метод который ищет файлы с названием index\default  и выставляет их как корневые при запуске страницы. Можно поменять
             //app.UseFileServer();
 
-            var color = AppConfiguration["color"];
-            var text = AppConfiguration["text"];
+            ////Lesson 5
+            //var color = AppConfiguration["color"];
+            //var text = AppConfiguration["text"];
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync($"<h1 style='color:{color};'>{text}</h1>");
+            //});
+
+            // Lesson 6
+            var Ainur = new Person();
+            AppConfiguration.Bind(Ainur);
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync($"<h1 style='color:{color};'>{text}</h1>");
+                string name = $"<p>Name: {Ainur.Name}</p>";
+                string age = $"<p>Age: {Ainur.Age}</p>";
+                string languageList = "<p>Languages:</p><ul>";
+                foreach(var language in Ainur.Languages)
+                {
+                    languageList += $"<li><p>{language}</p></li>";
+                }
+                languageList += "</ul>";
+                string company = $"<p>Company: {AppConfiguration.GetSection("company").Get<Company>().Tittle}</p>";
+                await context.Response.WriteAsync($"{name}{age}{languageList}{company}");                    
             });
         }
     }

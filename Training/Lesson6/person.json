@@ -1,0 +1,13 @@
+﻿{
+    "age": "21",
+    "name": "Ainur",
+    "languages": [
+      "English",
+      "Russian",
+      "Bashkir"
+    ],
+  "company": {
+    "tittle": "STANKIN",
+    "country": "Russia"
+  }
+}
