@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Training.Lesson6;
 using Training.Lesson7;
 
@@ -53,7 +54,7 @@ namespace Training
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             // Используем слой для обработки возникающих ошибок. Его стоит ставить в начало чтобы он корректно отработал
             //app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -130,8 +131,17 @@ namespace Training
             //    await context.Response.WriteAsync($"{name}{age}{languageList}{company}");                    
             //});
 
-            // Lesson 7 
-            app.UseMiddleware<PersonMiddleware>();
+            /// Lesson 7 
+            /// Конфигурация через middleware
+            //app.UseMiddleware<PersonMiddleware>();
+
+            /// Lesson 8
+            /// Логирование
+            app.Run(async (context) =>
+            {
+                logger.LogDebug("Processing request {0}", context.Request.Path);
+                await context.Response.WriteAsync("Hello world!");
+            });
         }
     }
 }
