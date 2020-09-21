@@ -75,27 +75,54 @@ namespace RoutingApp
 
             //////// Lesson 9
 
-            // Определяем обработчик маршрута
-            var myRouteHandler = new RouteHandler(Handle);
-            // Создаем маршрут, используя обработчик
-            var routeBuilder = new RouteBuilder(app, myRouteHandler);
-            // Задаем маршрут - он должен соотвествовать запросу *адрес сайта*/controller/action
-            // Запрос не обязательно должен содержать эти слова главное соблюдать шаблон Например: *адрес*/ainur/molodec тоже сработает
-            routeBuilder.MapRoute("default", "{controller}/{action}");
-            // строим маршрут 
+            //// Определяем обработчик маршрута
+            //var myRouteHandler = new RouteHandler(Handle);
+            //// Создаем маршрут, используя обработчик
+            //var routeBuilder = new RouteBuilder(app, myRouteHandler);
+            //// Задаем маршрут - он должен соотвествовать запросу *адрес сайта*/controller/action
+            //// Запрос не обязательно должен содержать эти слова главное соблюдать шаблон Например: *адрес*/ainur/molodec тоже сработает
+            //routeBuilder.MapRoute("default", "{controller}/{action}");
+            //// строим маршрут 
+            //app.UseRouter(routeBuilder.Build());
+
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("HelloWorld!");
+            //});
+
+            ////////// Lesson 10 Варианты маршрутизации
+            // Обработчик для маршрута
+            var routeHandler = new RouteHandler(Handle);
+            var routeBuilder = new RouteBuilder(app,routeHandler);
+            //// Пример: *сайт*/любое слово/любое слово - Сработает данный метод
+            //routeBuilder.MapRoute("{controller}/{action}", async context =>
+            //{
+            //    context.Response.ContentType = "text/html; charset=utf-8";
+            //    await context.Response.WriteAsync("Двухсегментный запрос");
+            //});
+            //// Тоже самое только запрос только трехсегментный
+            //routeBuilder.MapRoute("{contoller}/{action}/{userID}", async context =>
+            //{
+            //    context.Response.ContentType = "text/html; charset=utf-8";
+            //    await context.Response.WriteAsync("Трехсегментный запрос");
+            //});
+            // Маршрут с произвольным числом параметров: *адрес сайта*/home/Index/100/*произвольное число начинается отсюда*
+            routeBuilder.MapRoute("default", "{controller=home}/{action=Index}/{id?}/{*catchall}");
+
             app.UseRouter(routeBuilder.Build());
 
-            app.Run(async (context) =>
+            app.Run(async context =>
             {
-                await context.Response.WriteAsync("HelloWorld!");
+                context.Response.ContentType = "text/html; charset=utf-8";
+                await context.Response.WriteAsync("Добро пожаловать!");
             });
-
         }
 
-        // Обработка события Lesson 9
+        // Обработка события (переход по заданному маршруту) Lesson 9
         private async Task Handle(HttpContext context)
         {
-            await context.Response.WriteAsync("Hello Ainur! My project about ASP.NET");
+            context.Response.ContentType = "text/html; charset=utf-8";
+            await context.Response.WriteAsync("Сработал обработчик маршрута (Handle)");
         }
     }
 }
