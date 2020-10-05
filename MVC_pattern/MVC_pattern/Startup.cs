@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC_pattern.Models;
 
 namespace MVC_pattern
 {
@@ -24,6 +26,8 @@ namespace MVC_pattern
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            string connect = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MobileContext>(options => options.UseSqlServer(connect));          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
