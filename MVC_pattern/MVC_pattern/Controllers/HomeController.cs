@@ -23,5 +23,25 @@ namespace MVC_pattern.Controllers
         {
             return View(db.Phones.ToList());
         }
+
+        [HttpGet]
+        public IActionResult Buy (int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+            // ViewBag - это обьек который позволяет занести в него переменные и использовать во вьюхе 
+            ViewBag.PhoneId = id;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Buy(Order order)
+        {
+            db.Orders.Add(order);
+
+            db.SaveChanges();
+            //return "Спасибо, " + order.User + ", за покупку!";
+            return View("afterBuy");
+        }
     }
 }
