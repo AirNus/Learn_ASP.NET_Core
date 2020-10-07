@@ -9,6 +9,7 @@ using MVC_pattern.Models;
 
 namespace MVC_pattern.Controllers
 {
+    [Controller]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -43,5 +44,30 @@ namespace MVC_pattern.Controllers
             //return "Спасибо, " + order.User + ", за покупку!";
             return View("afterBuy");
         }
+
+        [HttpGet]
+        // Можно задать имя действия таким образом. По умолчанию это название метода
+        //[ActionName("Ainur")]
+        public string Practice(string regex, int number)
+        {
+            return "Вы выбрали: " + regex + " под номером: " + number;
+        }
+
+        [HttpPost]
+        public IActionResult Kitty(int type,int number)
+        {
+            string src = "";
+            if (number == 1234)
+            {
+                src = "https://klike.net/uploads/posts/2018-10/1539499416_1.jpg";
+            }
+            else
+            {
+                src = "https://envato-shoebox-0.imgix.net/044c/8297-cbb7-4a1e-95c3-299ba3071dda/0O1A3636.JPG?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=7dca16e00bb5fb37d7ee6541868943f5";
+            }
+            ViewBag.src = src;
+            return View();
+        }
+
     }
 }

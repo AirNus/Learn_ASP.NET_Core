@@ -76,3 +76,4 @@ C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\MVC_pattern\MVC_pattern\
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\MVC_pattern\MVC_pattern\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\MVC_pattern\MVC_pattern\obj\Debug\netcoreapp3.1\Razor\Views\Home\Buy.cshtml.g.cs
 C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\MVC_pattern\MVC_pattern\obj\Debug\netcoreapp3.1\Razor\Views\Home\afterBuy.cshtml.g.cs
+C:\Users\Ainur\source\repos\Training\Learn_ASP.NET_Core\MVC_pattern\MVC_pattern\obj\Debug\netcoreapp3.1\Razor\Views\Home\Kitty.cshtml.g.cs
