@@ -48,13 +48,14 @@ namespace MVC_pattern.Controllers
         [HttpGet]
         // Можно задать имя действия таким образом. По умолчанию это название метода
         //[ActionName("Ainur")]
-        public string Practice(string regex, int number)
+        public IActionResult Practice(string regex, int number)
         {
-            return "Вы выбрали: " + regex + " под номером: " + number;
+            return Redirect("~/Home/Kitty?number=1234");
+            //return "Вы выбрали: " + regex + " под номером: " + number;
         }
 
-        [HttpPost]
-        public IActionResult Kitty(int type,int number)
+        [HttpGet]
+        public IActionResult Kitty(int number)
         {
             string src = "";
             if (number == 1234)
@@ -67,6 +68,12 @@ namespace MVC_pattern.Controllers
             }
             ViewBag.src = src;
             return View();
+        }
+
+        public JsonResult GetJson()
+        {
+            Phone phone = db.Phones.ToList()[0];
+            return Json(phone);
         }
 
     }
