@@ -54,7 +54,7 @@ namespace MVC_pattern.Controllers
             //return "Вы выбрали: " + regex + " под номером: " + number;
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Kitty(int number)
         {
             string src = "";
